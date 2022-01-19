@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Question Game</title>
+  </head>
+  <style>
+    body{
+      background-image: url(./question-mark-03.jpg);
+      background-size: 100%;
+    }
+    .header,#question, #score, .lost{
+      text-align: center;
+      font-size: 2rem;
+    }
+
+    #question, #score, .lost{
+      color: aliceblue;
+    }
+
+    .lost{
+      font-size: 10rem;
+    }
+
+    .hidden{
+      display: none;
+    }
+
+  </style>
+  <body>
+    <div class="container">
+    <div class="header"><h1>Question Game.</h1></div>
+    <div id="question"><p></p></div>
+    <div id="score"><p></p></div>
+    <div class="lost hidden"><p>You lost.</p></div>
+  </div>
+    <script>
+      var quiz = {
+        q1: ["Does San Francisco have a problem with homeless people?", "t"],
+        q2: ["Is rent crazy expensive in San Francisco?", "t"],
+        q3: ["Does BART in SF resemble hell if lights were out?", "t"],
+        q4: ["Would I move to any other city in the USA?", "f"],
+        q5: ["Does San Francisco a whimsical architecture?", "t"],
+        q6: ["Is the climate one of the most preferable in the world?", "t"],
+        q7: ["Are there good job opportunities in San Francisco?", "t"],
+        q8: ["Are there good schools in San Francisco?", "t"],
+        q9: ["Is there diverse cuisine in SF?", "t"],
+        q10: ["Is San Francisco surrounded by incredible nature?", "t"],
+      };
+      var score = 0;
+      var numb = 1;
+      function loadQuestion() { 
+        var query = document.querySelector("#question p");
+        query.innerText  = quiz["q" + numb][0];
+      }
+      loadQuestion();
+
+      window.onkeyup = function (e) {
+         var key = e.key;
+          if (key ==="t" || key==="f"){
+            changeQuestion(key);
+          }
+        };
+
+      function scoreTable() {
+        var highScore = document.querySelector("#score p");
+        highScore.innerText  = 'Score: ' + score;
+        score++;
+      }
+      scoreTable();
+
+      function changeQuestion(input) {
+        if(quiz["q" + numb][1] === input){
+          numb++;
+          loadQuestion();
+          scoreTable();
+        }
+        else if(quiz["q" + numb][1]!==input){
+          var lost = document.querySelector(".lost");
+          document.querySelector("#question").classList.add("hidden");
+          document.querySelector("#score").classList.add("hidden");
+          lost.classList.remove("hidden");
+        }
+      }
+    </script>
+  </body>
+</html>
